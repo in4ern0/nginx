@@ -1,4 +1,17 @@
+#### Nginx for RHEL
+```
+server {
+    listen 80;
+    server_name ilkin.com;
 
+    location / {
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
+        proxy_pass         "http://127.0.0.1:9090";
+    }
+}
+
+server {
     listen 81 default_server;
     listen [::]:81 default_server;
 
@@ -43,4 +56,4 @@ server {
         proxy_pass http://127.0.0.1:8282;
     }
 }
-         
+```
