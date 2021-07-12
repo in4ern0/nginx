@@ -113,6 +113,8 @@ server {
 
 
 
+sudo a2enmod proxy_http
+
 <VirtualHost *:*>
         #ServerName  www.backend.com
         ServerAdmin webmaster@localhost
