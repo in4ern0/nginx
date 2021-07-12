@@ -113,6 +113,22 @@ server {
 
 
 
+<VirtualHost *:*>
+        #ServerName  www.backend.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+        ServerAlias www.example.com
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/public.crt
+        SSLCertificateKeyFile /etc/apache2/private.key
+        ProxyPreserveHost On
+        ProxyPass / http://10.0.0.0:8080/
+        #ProxyPassReverse / http://0.0.0.0:8080/
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
 
 
 
