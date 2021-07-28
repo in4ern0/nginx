@@ -114,6 +114,7 @@ server {
 
 
 sudo a2enmod proxy_http
+sudo a2enmod ssl 
 
 <VirtualHost *:*>
         #ServerName  www.backend.com
