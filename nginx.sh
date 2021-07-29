@@ -1,4 +1,3 @@
-
 #!/bin/bash
 nginx=stable # use nginx=development for latest development version
 echo -ne '\n' | add-apt-repository ppa:nginx/$nginx
