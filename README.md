@@ -112,27 +112,6 @@ server {
 }
 
 
-
-sudo a2enmod proxy_http
-sudo a2enmod ssl 
-
-<VirtualHost *:*>
-        #ServerName  www.backend.com
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/html
-        ServerAlias www.example.com
-        SSLEngine on
-        SSLCertificateFile /etc/apache2/public.crt
-        SSLCertificateKeyFile /etc/apache2/private.key
-        ProxyPreserveHost On
-        ProxyPass / http://10.0.0.0:8080/
-        #ProxyPassReverse / http://0.0.0.0:8080/
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-</VirtualHost>
-
-
 server {
     listen       80;
     server_name  ip ;
@@ -157,6 +136,30 @@ rewrite ^/novacms$ /frq-admin.php last;
 
 
 }
+
+
+
+sudo a2enmod proxy_http
+sudo a2enmod ssl 
+
+<VirtualHost *:*>
+        #ServerName  www.backend.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+        ServerAlias www.example.com
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/public.crt
+        SSLCertificateKeyFile /etc/apache2/private.key
+        ProxyPreserveHost On
+        ProxyPass / http://10.0.0.0:8080/
+        #ProxyPassReverse / http://0.0.0.0:8080/
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+
+
 
 
 
