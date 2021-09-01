@@ -133,7 +133,30 @@ sudo a2enmod ssl
 </VirtualHost>
 
 
+server {
+    listen       80;
+    server_name  ip ;
+    root   /var/www/html;
+    index index.php index.html index.htm;
 
+location / {
+  if (!-e $request_filename){
+    rewrite ^/(.*)$ /index.php?perma=$1;
+ }
+}
+rewrite ^/novacms$ /frq-admin.php last;
+
+    location ~ .php$ {
+                try_files $uri =404;
+                fastcgi_pass 127.0.0.1:80;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+                fastcgi_read_timeout 300;
+        }
+
+
+}
 
 
 
