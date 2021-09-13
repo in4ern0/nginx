@@ -114,7 +114,7 @@ server {
 
 server {
     listen       80;
-    server_name  ip ;
+    server_name  ip or servername ;
     root   /var/www/html;
     index index.php index.html index.htm;
 
@@ -143,7 +143,7 @@ sudo a2enmod proxy_http
 sudo a2enmod ssl 
 
 <VirtualHost *:*>
-        #ServerName  www.backend.com
+        #ServerName  www.frontend.com
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/html
         ServerAlias www.example.com
@@ -158,6 +158,50 @@ sudo a2enmod ssl
 
 </VirtualHost>
 
+
+
+
+server {
+    listen       80;
+    server_name example.com 192.168.1.1;
+    return 301 https://$server_name$request_uri;
+    #return 301 https://$host$request_uri;
+}
+
+server {
+
+        listen 443 ssl;
+        root /var/www/html/;
+        index index.html index.htm index.php;
+        server_name  example.com www.backend.example.com;
+        ssl_certificate     /path/to/certificate/public.crt;
+        ssl_certificate_key /path/to/key/private.key;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+        ssl_session_timeout 1d;
+        ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+
+
+        # intermediate configuration
+        ssl_protocols TLSv1.2;
+        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+        ssl_prefer_server_ciphers off;
+
+        # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+        add_header Strict-Transport-Security "max-age=63072000" always;
+
+
+
+        location / {
+                try_files $uri $uri/ /index.php$is_args$args;
+        }
+
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        }
+}
 
 
 
